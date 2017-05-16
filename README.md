@@ -104,3 +104,34 @@ Wait a few moments for the virtual machine be up and running and check your doma
 ![aws](https://raw.githubusercontent.com/panazzo/multi-cloud-deployer/master/site/img/aws.jpg)
 
 ## Deploying to Azure
+
+The next step of our sample multi-cloud deployment is to deploy to another public cloud vendor, in this case, Azure. By this time, if you've completed all the previous set up steps, you shouldn't have any more set ups to do, so seat back, relax and enjoy your application being provisioned automaticaly following these next steps:
+
+Navigate do `terraform/azure`and run `terraform init`, `terraform plan` and `terraform apply`. The output might be like this:
+
+```
+➜  azure git:(master) terraform init
+Initializing the backend...
+
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your environment. If you forget, other
+commands will detect it and remind you to do so if necessary.
+
+➜  azure git:(master) terraform plan
+Refreshing Terraform state in-memory prior to plan...
+The refreshed state will be used to calculate this plan, but will not be
+persisted to local or remote state storage.
+
+.....
+
+
+
+
+
+```
