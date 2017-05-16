@@ -7,3 +7,6 @@
 
 #Source environment variables
 env-var.sh
+
+#Mac OSX files
+.DS_Store
