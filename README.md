@@ -55,6 +55,52 @@ data "aws_route53_zone" "services_public_zone" {
   name = "mydomain.com."
 }
 ```
+Now that everything is set up, you should be good to go and try your first deploy. To do so, navigate do `terraform/aws`and run `terraform init`, `terraform plan` and `terraform apply`
+```
+➜  multi-cloud-deployer git:(master) ✗ cd terraform/aws 
+➜  aws git:(master) ✗ 
+➜  aws git:(master) ✗ terraform init
+Initializing the backend...
 
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your environment. If you forget, other
+commands will detect it and remind you to do so if necessary.
+
+➜  aws git:(master) ✗ terraform plan
+Refreshing Terraform state in-memory prior to plan...
+The refreshed state will be used to calculate this plan, but will not be
+persisted to local or remote state storage.
+
+data.aws_route53_zone.services_public_zone: Refreshing state...
+The Terraform execution plan has been generated and is shown below.
+Resources are shown in alphabetical order for quick scanning. Green resources
+will be created (or destroyed and then created if an existing resource
+exists), yellow resources are being changed in-place, and red resources
+will be destroyed. Cyan entries are data sources to be read.
+
+Note: You didn't specify an "-out" parameter to save this plan, so when
+"apply" is called, Terraform can't guarantee this is what will execute.
+
+.....
+
+➜  aws git:(master) ✗ terraform apply
+data.aws_route53_zone.services_public_zone: Refreshing state...
+aws_vpc.vpc_test: Creating...
+
+.....
+
+Apply complete! Resources: 10 added, 0 changed, 0 destroyed.
+
+```
+
+Wait a few moments for the virtual machine be up and running and check your domain (e.g. <http://multi-cloud.cloud104.io>). If you get the following screen, congratulations! You just deployed your sample application using some piece of nice automation :)
+
+![aws](https://raw.githubusercontent.com/panazzo/multi-cloud-deployer/master/site/img/aws.jpg)
 
 ## Deploying to Azure
