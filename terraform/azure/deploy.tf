@@ -1,7 +1,15 @@
+############################################
+############## Resource Group ##############
+############################################
+
 resource "azurerm_resource_group" "resource_group_test" {
   name     = "resource-group-multi-cloud-deployer-test"
   location = "West US"
 }
+
+############################################
+################## Network #################
+############################################
 
 resource "azurerm_virtual_network" "virtual_network_test" {
   name                = "virtualnetworkmulticlouddeployertest"
@@ -41,6 +49,9 @@ resource "azurerm_network_interface" "network_interface_test" {
   }
 }
 
+############################################
+################## Storage #################
+############################################
 
 resource "azurerm_storage_account" "storage_account_test" {
   name                = "storageaccountpanazzo"
@@ -60,12 +71,16 @@ resource "azurerm_storage_container" "storage_container_test" {
   container_access_type = "private"
 }
 
+############################################
+################ Application ###############
+############################################
+
 resource "azurerm_virtual_machine" "virtual_machine_test" {
   name                  = "virtualmachinemulticlouddeployertest"
   location              = "West US"
   resource_group_name   = "${azurerm_resource_group.resource_group_test.name}"
   network_interface_ids = ["${azurerm_network_interface.network_interface_test.id}"]
-  vm_size               = "Standard_A0"
+  vm_size               = "Standard_A2"
 
   storage_image_reference {
     publisher = "Canonical"
@@ -85,7 +100,7 @@ resource "azurerm_virtual_machine" "virtual_machine_test" {
     computer_name  = "hostname"
     admin_username = "testadmin"
     admin_password = "Password1234"
-    custom_data = "${file("install.sh")}"
+    custom_data = "${file("install.txt")}"
   }
 
   os_profile_linux_config {
@@ -95,4 +110,20 @@ resource "azurerm_virtual_machine" "virtual_machine_test" {
   tags {
     environment = "staging"
   }
+}
+
+data "aws_route53_zone" "services_public_zone" {
+  name = "cloud104.io."
+}
+
+############################################
+#################### DNS ###################
+############################################
+
+resource "aws_route53_record" "aws_route53_record_test" {
+  zone_id = "${data.aws_route53_zone.services_public_zone.zone_id}"
+  name    = "multi-cloud"
+  type    = "A"
+  ttl     = "30"
+  records = ["${azurerm_public_ip.public_ip_test.ip_address}"]
 }
