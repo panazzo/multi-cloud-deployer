@@ -45,4 +45,16 @@ aws s3api create-bucket --bucket terraform-state-multicloud-poc-azure
 
 ## Deploying to AWS
 
+The first cloud we're going to deploy our sample application is going to be AWS and for that matter, the first step we need to take is to register a domain and host it's DNS records using Route 53. * In case you already have a domain on Route 53, it's fine to use it.
+
+* How to register a domain in Route 53 > <http://docs.aws.amazon.com/Route53/latest/DeveloperGuide/domain-register.html>
+
+The next step is to replace our sample domain "cloud104.io" to your registered domain. Make sure you find and replace both on `terraform/aws/deploy.tf` and `terraform/azure/deploy.tf`. It should look like this:
+```
+data "aws_route53_zone" "services_public_zone" {
+  name = "mydomain.com."
+}
+```
+
+
 ## Deploying to Azure
