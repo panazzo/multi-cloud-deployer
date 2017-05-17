@@ -130,8 +130,20 @@ persisted to local or remote state storage.
 
 .....
 
+➜  azure git:(master) terraform apply
+data.aws_route53_zone.services_public_zone: Refreshing state...
+azurerm_resource_group.resource_group_test: Creating...
 
+.....
 
-
+Apply complete! Resources: 9 added, 0 changed, 0 destroyed.
 
 ```
+
+If you're lucky enought to made trought here, you should get the following screen when you hit your sample application url:
+
+![azure](https://raw.githubusercontent.com/panazzo/multi-cloud-deployer/master/site/img/azure.jpg)
+
+Now, everytime you wish change your public cloud vendor, just go to `terraform/<vendor>` and run `terraform apply``
+
+#CodeOn :D
