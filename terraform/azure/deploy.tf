@@ -19,9 +19,9 @@ resource "azurerm_virtual_network" "virtual_network_test" {
 }
 
 resource "azurerm_subnet" "subnet_test" {
-  name                 = "subnetmulticlouddeployertest"
-  resource_group_name  = "${azurerm_resource_group.resource_group_test.name}"
-  virtual_network_name = "${azurerm_virtual_network.virtual_network_test.name}"
+  name                      = "subnetmulticlouddeployertest"
+  resource_group_name       = "${azurerm_resource_group.resource_group_test.name}"
+  virtual_network_name      = "${azurerm_virtual_network.virtual_network_test.name}"
   address_prefix       = "10.0.2.0/24"
 }
 
@@ -32,7 +32,7 @@ resource "azurerm_public_ip" "public_ip_test" {
   public_ip_address_allocation = "static"
 
   tags {
-    environment = "publicipmulticlouddeployertest"
+    environment = "Production"
   }
 }
 
@@ -40,6 +40,7 @@ resource "azurerm_network_interface" "network_interface_test" {
   name                 = "networkinterfacemulticlouddeployertest"
   location             = "West US"
   resource_group_name  = "${azurerm_resource_group.resource_group_test.name}"
+  network_security_group_id = "${azurerm_network_security_group.network_security_group_test.id}"
 
   ip_configuration {
     name                          = "testconfiguration1"
@@ -49,6 +50,43 @@ resource "azurerm_network_interface" "network_interface_test" {
   }
 }
 
+############################################
+###############  Security Group ############
+############################################
+
+resource "azurerm_network_security_group" "network_security_group_test" {
+  name                = "network_security_group_test"
+  location            = "West US"
+  resource_group_name = "${azurerm_resource_group.resource_group_test.name}"
+
+  security_rule {
+    name                       = "web_access"
+    priority                   = 100
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "*"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
+
+    security_rule {
+    name                       = "allow_outbound"
+    priority                   = 100
+    direction                  = "Outbound"
+    access                     = "Allow"
+    protocol                   = "*"
+    source_port_range          = "*"
+    destination_port_range     = "*"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
+
+  tags {
+    environment = "Production"
+  }
+}
 ############################################
 ################## Storage #################
 ############################################
@@ -60,7 +98,7 @@ resource "azurerm_storage_account" "storage_account_test" {
   account_type        = "Standard_LRS"
 
   tags {
-    environment = "staging"
+    environment = "Production"
   }
 }
 
@@ -85,7 +123,7 @@ resource "azurerm_virtual_machine" "virtual_machine_test" {
   storage_image_reference {
     publisher = "Canonical"
     offer     = "UbuntuServer"
-    sku       = "14.04.2-LTS"
+    sku       = "16.04-LTS"
     version   = "latest"
   }
 
@@ -108,7 +146,7 @@ resource "azurerm_virtual_machine" "virtual_machine_test" {
   }
 
   tags {
-    environment = "staging"
+    environment = "Production"
   }
 }
 

@@ -61,13 +61,13 @@ resource "aws_route_table_association" "route_table_association_zone_a_test" {
 # Securiy group
 resource "aws_security_group" "security_group_test" {
   name        = "services_itsm_security_group"
-  description = "security group full access"
+  description = "security group web access"
   vpc_id      = "${aws_vpc.vpc_test.id}" 
 
   ingress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "TCP"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
