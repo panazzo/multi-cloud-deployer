@@ -144,6 +144,6 @@ If you're lucky enought to made trought here, you should get the following scree
 
 ![azure](https://raw.githubusercontent.com/panazzo/multi-cloud-deployer/master/site/img/azure.jpg)
 
-Now, everytime you wish change your public cloud vendor, just go to `terraform/<vendor>` and run `terraform apply``
+Now, everytime you wish change your public cloud vendor, just go to `terraform/<vendor>` and run `terraform apply`
 
 #CodeOn :D
