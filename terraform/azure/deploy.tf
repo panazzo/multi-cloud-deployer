@@ -136,13 +136,17 @@ resource "azurerm_virtual_machine" "virtual_machine_test" {
 
   os_profile {
     computer_name  = "hostname"
-    admin_username = "testadmin"
-    admin_password = "Password1234"
+    admin_username = "ubuntu"
+    admin_password = "Cloud104-2017"
     custom_data = "${file("install.txt")}"
   }
 
   os_profile_linux_config {
     disable_password_authentication = false
+    ssh_keys                        = [{
+                                        path     = "/home/ubuntu/.ssh/authorized_keys"
+                                        key_data = "${file("../../key-pair-test.pub")}"
+                                      }]
   }
 
   tags {
