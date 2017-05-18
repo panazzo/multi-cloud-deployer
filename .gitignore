@@ -13,3 +13,4 @@ env-var.sh
 
 #SSH Public Key
 *.pub
+*.pem
